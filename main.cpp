@@ -11,6 +11,7 @@ int main() {
 	*/
 	int k = 1;
 	bool is_backtrack = 0;
+	int solution_count = 0;
 	for (int i = 0; i < 9; i++) {
 		for (int j = 0; j < 9; j++) {
 			if (!s1.puzzle[i][j]) {
@@ -23,6 +24,12 @@ int main() {
 					}
 					++k;
 				}
+				if (s1.is_solved()) {
+					++solution_count;
+					std::cout << std::endl;
+					s1.print(std::cout) << std::endl;
+					s1.puzzle[i][j] = 0;
+				}
 				if (!s1.puzzle[i][j]) {
 					if (!s1.history.empty()) {
 						is_backtrack = 1;
@@ -34,7 +41,7 @@ int main() {
 						--j;
 					}
 					else {
-						std::cout << "No solution found.";
+						std::cout << (solution_count ? "All possible solutions found." : "No solution found.");
 						return 0;
 					}
 				}
@@ -45,10 +52,4 @@ int main() {
 			}
 		}
 	}
-	if (s1.is_solved()) {
-		std::cout<<std::endl;
-		s1.print(std::cout) << std::endl;
-	}
-	else
-		std::cout << "No solution found.";
 }
